@@ -1,11 +1,12 @@
 {
   "name": "@matterhorn-studios/react-fb-auth",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple ReactJS package ment to make ReactJS/NextJS Firebase authentication easy. ",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "build": "tsc"
+    "build": "tsc -d"
   },
   "repository": {
     "type": "git",
