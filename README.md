@@ -29,7 +29,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// init app
+// init auth
 export const auth = getAuth(app);
 
 // init google provider
