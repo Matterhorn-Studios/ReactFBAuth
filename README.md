@@ -10,20 +10,20 @@ _currently supports email/password and Google authentication, more will be added
 
 #### Create a Firebase config file
 
-This file will house your Firebase config as well as auth object and its providers.
+This file will house your Firebase config as well as auth object and its providers. Config object comes from Firebase console.
 
 ```typescript
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDhxLWbmaTX9UEZxE1rX4Q3lRwI6y0b-MM",
-  authDomain: "benjamin-davis-tech.firebaseapp.com",
-  projectId: "benjamin-davis-tech",
-  storageBucket: "benjamin-davis-tech.appspot.com",
-  messagingSenderId: "269577017377",
-  appId: "1:269577017377:web:93a790d017d0253fa1ab60",
-  measurementId: "G-JLFKQW30NM",
+  apiKey: "API-KEY",
+  authDomain: "EXAMPLE-DOMAIN.firebaseapp.com",
+  projectId: "PROJECT-ID",
+  storageBucket: "DOMAIN.appspot.com",
+  messagingSenderId: "ID",
+  appId: "ID",
+  measurementId: "ID",
 };
 
 // Initialize Firebase
@@ -85,8 +85,8 @@ export default App;
 
 #### Methods on useFBAuth()
 
-`googleSignIn` Prompts the user to sign in with google, populates the user, loading, and error object
-`emailSignIn(email: string, password: string)` Signs the user in with the provided email and password, populates the user, loading, and error object
-`emailSignUp(email: string, password: string)` Signs the user up with the provided email and password, populates the user, loading, and error object
-`logOut` Logs the user out
-`clearError` Clears the error object (resets it to null)
+- `googleSignIn` Prompts the user to sign in with google, populates the user, loading, and error object
+- `emailSignIn(email: string, password: string)` Signs the user in with the provided email and password, populates the user, loading, and error object
+- `emailSignUp(email: string, password: string)` Signs the user up with the provided email and password, populates the user, loading, and error object
+- `logOut` Logs the user out
+- `clearError` Clears the error object (resets it to null)
