@@ -8,7 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@matterhorn-studios/react-fb-auth": "^1.0.3",
+    "@matterhorn-studios/react-fb-auth": "^1.1.5",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
