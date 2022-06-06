@@ -9,8 +9,11 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   AuthError,
+  onAuthStateChanged,
+  browserLocalPersistence,
+  Persistence,
 } from "firebase/auth";
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 
 // interface for the context
 interface IFBAuthContext {
@@ -41,9 +44,10 @@ export const FBAuthProvider: FC<{
   children: JSX.Element;
   fb_auth: Auth;
   g_provider: GoogleAuthProvider;
-}> = ({ fb_auth, children, g_provider }) => {
+  persistence_type: Persistence;
+}> = ({ fb_auth, children, g_provider, persistence_type }) => {
   // state to hold the current user
-  const [user, setUser] = useState<User | null>(fb_auth.currentUser);
+  const [user, setUser] = useState<User | null>(null);
 
   // state to hold the loading status
   const [loading, setLoading] = useState(false);
@@ -54,10 +58,18 @@ export const FBAuthProvider: FC<{
   // hook to clear the error
   const clearError = () => setError(null);
 
+  // watch the state of auth and load the user
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(fb_auth, (user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
   // hook to sign in a user with email
   const emailSignIn = async (email: string, password: string) => {
     setLoading(true);
-    setPersistence(fb_auth, browserSessionPersistence).then(() => {
+    setPersistence(fb_auth, persistence_type).then(() => {
       signInWithEmailAndPassword(fb_auth, email, password)
         .then((result) => {
           setUser(result.user);
@@ -73,7 +85,7 @@ export const FBAuthProvider: FC<{
   // hook to sign up with email
   const emailSignUp = async (email: string, password: string) => {
     setLoading(true);
-    setPersistence(fb_auth, browserSessionPersistence).then(() => {
+    setPersistence(fb_auth, persistence_type).then(() => {
       createUserWithEmailAndPassword(fb_auth, email, password)
         .then((result) => {
           setUser(result.user);
@@ -89,17 +101,22 @@ export const FBAuthProvider: FC<{
   // hook to sign in a user with google
   const googleSignIn = async () => {
     setLoading(true);
-    setPersistence(fb_auth, browserSessionPersistence).then(() => {
-      signInWithPopup(fb_auth, g_provider)
-        .then((result) => {
-          setUser(result.user);
-          setLoading(false);
-        })
-        .catch((error) => {
-          setError(error);
-          setLoading(false);
-        });
-    });
+    setPersistence(fb_auth, persistence_type)
+      .then(() => {
+        signInWithPopup(fb_auth, g_provider)
+          .then((result) => {
+            setUser(result.user);
+            setLoading(false);
+          })
+          .catch((error) => {
+            setError(error);
+            setLoading(false);
+          });
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
   };
 
   // hook to sign a user out

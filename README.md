@@ -39,11 +39,18 @@ gProvider.setCustomParameters({ prompt: "select_account" });
 
 #### Add the provider to main
 
+The provider takes in the auth object, the google provider, and the persistence type (https://firebase.google.com/docs/auth/web/auth-state-persistence).
+
 ```typescript
 import { auth, gProvider } from "./firebase_client";
+import { browserLocalPersistence } from "firebase/auth";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <FBAuthProvider fb_auth={auth} g_provider={gProvider}>
+  <FBAuthProvider
+    fb_auth={fb_auth}
+    g_provider={g_provider}
+    persistence_type={browserLocalPersistence}
+  >
     <React.StrictMode>
       <App />
     </React.StrictMode>
