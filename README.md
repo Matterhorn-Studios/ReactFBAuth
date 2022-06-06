@@ -47,8 +47,8 @@ import { browserLocalPersistence } from "firebase/auth";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <FBAuthProvider
-    fb_auth={fb_auth}
-    g_provider={g_provider}
+    fb_auth={auth}
+    g_provider={gProvider}
     persistence_type={browserLocalPersistence}
   >
     <React.StrictMode>
